@@ -1,0 +1,104 @@
+// Version: 1.0.0
+type AdminMessage__371691150 =
+  {
+    content : Text;
+    id : MessageId__291319400;
+    isAdminReply : Bool;
+    var isRead : Bool;
+    sender : UserId__158757552;
+    sentAt : Timestamp__301639476
+  };
+type BadgeId__664556746 =
+  {
+    #eco_warrior;
+    #fifty_reports;
+    #first_report;
+    #hundred_reports;
+    #pioneer;
+    #ten_reports
+  };
+type ChatId__922926295 = Text;
+type ChatMessage__286745392 =
+  {
+    chatId : ChatId__922926295;
+    content : Text;
+    id : MessageId__291319400;
+    var isRead : Bool;
+    sender : UserId__158757552;
+    sentAt : Timestamp__301639476
+  };
+type MessageId__291319400 = Nat;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type ReportCategory__2591946 = {#garbage; #other; #pollution; #unsafe};
+type ReportId__327116113 = Nat;
+type ReportStatus__445058036 = {#approved; #pending; #resolved};
+type Report__953667835 =
+  {
+    category : ReportCategory__2591946;
+    createdAt : Timestamp__301639476;
+    description : Text;
+    id : ReportId__327116113;
+    lat : Float;
+    lng : Float;
+    photoUrl : Text;
+    reporter : UserId__158757552;
+    var status : ReportStatus__445058036
+  };
+type Timestamp__301639476 = Int;
+type UserId__158757552 = Principal;
+type UserProfile__277265826 =
+  {
+    var avatarUrl : ?Text;
+    var badges : [BadgeId__664556746];
+    id : UserId__158757552;
+    joinedAt : Timestamp__301639476;
+    var points : Nat;
+    var reportCount : Nat;
+    var username : Text
+  };
+actor {
+  stable adminMessages :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?AdminMessage__371691150]];
+      var elementIndex : Nat__490723111
+    };
+  stable adminMsgIdCounter :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Nat]];
+      var elementIndex : Nat__490723111
+    };
+  stable adminPrincipal : Principal;
+  stable chatMessages :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?ChatMessage__286745392]];
+      var elementIndex : Nat__490723111
+    };
+  stable chatMsgIdCounter :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Nat]];
+      var elementIndex : Nat__490723111
+    };
+  stable reportIdCounter :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Nat]];
+      var elementIndex : Nat__490723111
+    };
+  stable reports :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Report__953667835]];
+      var elementIndex : Nat__490723111
+    };
+  stable users :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?UserProfile__277265826]];
+      var elementIndex : Nat__490723111
+    }
+};

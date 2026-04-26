@@ -1,0 +1,22 @@
+{
+  "overview": "CleanZone is a community-driven city cleanliness reporting app. Users submit reports of garbage, pollution, and unsafe areas with photos and map locations. Features include interactive map with heatmap overlay, points and badges, leaderboard, and direct messaging between users and admin.",
+  "features": [
+    "Photo-based report submission with map location picker",
+    "Interactive map with heatmap overlay showing pollution density",
+    "User authentication and profiles with contribution tracking",
+    "Points, badges, and leaderboard for community engagement",
+    "Direct messaging to admin and user-to-user chat",
+    "Construction/urban industrial design theme"
+  ],
+  "category": "productivity",
+  "tags": [
+    "environment",
+    "community",
+    "reporting",
+    "maps",
+    "gamification",
+    "chat",
+    "urban"
+  ],
+  "last_updated": "2026-04-21T21:38:57.566Z"
+}

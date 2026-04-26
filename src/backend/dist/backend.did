@@ -1,0 +1,132 @@
+type UserProfilePublic = 
+ record {
+   avatarUrl: opt text;
+   badges: vec BadgeId;
+   id: UserId;
+   joinedAt: Timestamp;
+   points: nat;
+   reportCount: nat;
+   username: text;
+ };
+type UserId = principal;
+type Timestamp = int;
+type SubmitReportArgs = 
+ record {
+   category: ReportCategory;
+   description: text;
+   lat: float64;
+   lng: float64;
+   photoUrl: text;
+ };
+type ReportStatus = 
+ variant {
+   approved;
+   pending;
+   resolved;
+ };
+type ReportPublic = 
+ record {
+   category: ReportCategory;
+   createdAt: Timestamp;
+   description: text;
+   id: ReportId;
+   lat: float64;
+   lng: float64;
+   photoUrl: text;
+   reporter: UserId;
+   status: ReportStatus;
+ };
+type ReportId = nat;
+type ReportCategory = 
+ variant {
+   garbage;
+   other;
+   pollution;
+   unsafe;
+ };
+type MessageId = nat;
+type LeaderboardEntry = 
+ record {
+   badgeCount: nat;
+   points: nat;
+   rank: nat;
+   userId: UserId;
+   username: text;
+ };
+type HeatmapPoint = 
+ record {
+   lat: float64;
+   lng: float64;
+   weight: nat;
+ };
+type ChatPreview = 
+ record {
+   chatId: ChatId;
+   lastMessage: text;
+   lastMessageAt: Timestamp;
+   otherUserId: UserId;
+   otherUsername: text;
+   unreadCount: nat;
+ };
+type ChatMessagePublic = 
+ record {
+   chatId: ChatId;
+   content: text;
+   id: MessageId;
+   isRead: bool;
+   sender: UserId;
+   sentAt: Timestamp;
+ };
+type ChatId = text;
+type BadgeMetadata = 
+ record {
+   icon: text;
+   id: BadgeId;
+   milestone: text;
+   name: text;
+ };
+type BadgeId = 
+ variant {
+   eco_warrior;
+   fifty_reports;
+   first_report;
+   hundred_reports;
+   pioneer;
+   ten_reports;
+ };
+type AdminMessagePublic = 
+ record {
+   content: text;
+   id: MessageId;
+   isAdminReply: bool;
+   isRead: bool;
+   sender: UserId;
+   sentAt: Timestamp;
+ };
+service : {
+  adminReply: (targetUserId: UserId, content: text) -> (MessageId);
+  getAdminInbox: () -> (vec UserId) query;
+  getAdminThreadForUser: (userId: UserId) -> (vec AdminMessagePublic) query;
+  getAllReports: () -> (vec ReportPublic) query;
+  getApprovedReports: () -> (vec ReportPublic) query;
+  getBadgeMetadata: () -> (vec BadgeMetadata) query;
+  getChatHistory: (otherUserId: UserId) -> (vec ChatMessagePublic) query;
+  getChatList: () -> (vec ChatPreview) query;
+  getHeatmapData: () -> (vec HeatmapPoint) query;
+  getLeaderboard: () -> (vec LeaderboardEntry) query;
+  getMyAdminThread: () -> (vec AdminMessagePublic) query;
+  getMyProfile: () -> (opt UserProfilePublic) query;
+  getMyRank: () -> (nat) query;
+  getReport: (reportId: ReportId) -> (opt ReportPublic) query;
+  getReportsByUser: (userId: UserId) -> (vec ReportPublic) query;
+  getUnreadCount: (otherUserId: UserId) -> (nat) query;
+  getUserProfile: (userId: UserId) -> (opt UserProfilePublic) query;
+  markAdminMessagesRead: (userId: UserId) -> ();
+  markChatMessagesRead: (otherUserId: UserId) -> ();
+  registerProfile: (username: text) -> (UserProfilePublic);
+  sendChatMessage: (recipient: UserId, content: text) -> (MessageId);
+  sendMessageToAdmin: (content: text) -> (MessageId);
+  submitReport: (args: SubmitReportArgs) -> (ReportId);
+  updateAvatar: (avatarUrl: opt text) -> (bool);
+  updateReportStatus: (reportId: ReportId, status: ReportStatus) -> (bool);
+}
